@@ -54,6 +54,8 @@ class ChessGame:
         start_row, start_col = start
         end_row, end_col = end
 
+        
+
         if not (1 <= start_row <= 8 and 1 <= start_col <= 8 and 1 <= end_row <= 8 and 1 <= end_col <= 8):
             print(1)
             return False  # Check if positions are within the board
@@ -63,6 +65,9 @@ class ChessGame:
             return False  # Cannot move to a position occupied by own piece
 
         piece = self.board[start_row - 1][start_col - 1].lower()
+
+        if piece == ' ':
+            return False
 
         if piece == 'p' and not self.valid_pawn_move(start, end):
             return False
@@ -326,17 +331,6 @@ def main():
     game = ChessGame()
 
     while True:
-        result = game.check_end(start, end)
-        if result[1]:
-            print(f"{result[0]} wins!!!")
-            print(1)
-            exit()
-        print('111111')
-        if game.is_checkmate():
-            print("Checkmate! The game is over.")
-            print(2)
-            exit()
-        print('22222')
         
         game.print_board()
         print(f"\n{game.current_player}'s turn:")
