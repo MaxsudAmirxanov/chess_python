@@ -17,7 +17,7 @@ class ChessGame:
         self.castling_rights = {'white': {'king_side': True, 'queen_side': True},
                                 'black': {'king_side': True, 'queen_side': True}}
 
-    def _print_board(self):
+    def print_board(self):
         "Вторая версия доски"
         print("    a b c d e f g h")
         print("  +----------------")
@@ -59,12 +59,22 @@ class ChessGame:
         if not (1 <= start_row <= 8 and 1 <= start_col <= 8 and 1 <= end_row <= 8 and 1 <= end_col <= 8):
             print(1)
             return False  # Check if positions are within the board
+        
+        
 
         if self.is_occupied_by_own_piece(end) == False:
             # print(2)
             return False  # Cannot move to a position occupied by own piece
 
         piece = self.board[start_row - 1][start_col - 1].lower()
+
+        if self.board[start_row - 1][start_col - 1] not in self.black_pieces and self.current_player == 'black':
+            print(' Черный хочет пойти белым')
+            return False
+
+        elif self.board[start_row - 1][start_col - 1] not in self.white_pieces and self.current_player == 'white':
+            print(' Белый хочет пойти черным')
+            return False  
 
         if piece == ' ':
             return False
