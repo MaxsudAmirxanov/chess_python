@@ -11,29 +11,13 @@ class ChessGame:
             ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
             ['R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R']
         ]
-        self.board_ = [
-            [' ', ' ', ' ', ' ', 'k', ' ', ' ', ' '],
-            ['p', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-            [' ', ' ', ' ', ' ', ' ', ' ', ' ', 'Q'],
-            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-            [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-            ['P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'],
-            ['R', 'N', 'B', ' ', 'K', 'B', 'N', 'R']
-        ]
+    
         self.current_player = 'white'
         self.white_pieces = ['p', 'n', 'b', 'q', 'k', 'r']
         self.black_pieces = ['P', 'N', 'B', 'Q', 'K', 'R']
         self.castling_rights = {'white': {'king_side': True, 'queen_side': True},
                                 'black': {'king_side': True, 'queen_side': True}}
 
-    def _print_board(self):
-        "Вторая версия доски"
-        print("    a b c d e f g h")
-        print("  +----------------")
-        for i, row in enumerate(self.board, 1):
-            print(f"{i} | {' '.join(row)}")
-        print()
 
     def print_board(self):
         "Первая версия доски"
@@ -119,8 +103,8 @@ class ChessGame:
             if start_col == end_col and start_row + direction == end_row and self.board[end_row - 1][end_col - 1] == ' ':
                 return True
             # Pawn captures diagonally
-            elif abs(start_col - end_col) == 1 and start_row + direction == end_row and self.board[end_row - 1][
-                end_col - 1].islower() != self.board[start_row - 1][start_col - 1].islower():
+            elif abs(start_col - end_col) == 1 and start_row + direction == end_row and \
+                self.board[end_row - 1][end_col - 1].islower() != self.board[start_row - 1][start_col - 1].islower():
                 return True
             else:
                 return False
@@ -253,10 +237,10 @@ class ChessGame:
 
     def make_move(self, start, end):
         if self.is_valid_move(start, end) and not self.is_occupied_by_own_piece(end):
-            start_row, start_col = start
+            start_row, start_col = start (1,5)
             end_row, end_col = end
-            self.board[end_row - 1][end_col - 1] = self.board[start_row - 1][start_col - 1]
-            self.board[start_row - 1][start_col - 1] = ' '
+            self.board[end_row - 1][end_col - 1] = self.board[start_row - 1][start_col - 1]# end заменяем на start
+            self.board[start_row - 1][start_col - 1] = ' ' #Stsrt заменяем на " "
             self.switch_player()
         else:
             print("Invalid move. Try again.")
@@ -501,7 +485,7 @@ def get_user_input():
 
 def main():
     'Цикличный запуск нашей программы'
-    game = ChessGame() 
+    game = ChessGame()  #game  экземпляр класса ChessGame
 
 
     while True:
@@ -525,7 +509,7 @@ def main():
             print("Incorrect data entry. Try again.")
             continue
         else:
-            start, end = result
+            start, end = result 
         # print(result)
 
         game.make_move(start, end)
