@@ -23,17 +23,13 @@ class ChessGame:
         "Первая версия доски"
         st = '    '
         a=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' ]
-        # a.reverse()
-        # st+= str(index_row)
+
         for i in a:
             st= st + str(i) + ' | '
         print(st)
         # print('--  --  --  --  --  --  --  --')
         for index_row, row in enumerate(self.board):
-            # index_row= 7-index_row
-            # print(' '.join(str(piece) for piece in row))
-
-            # print(st)
+   
             print('   --  --  --  --  --  --  --  --')
             st=''
             st= st + str(index_row +1) 
@@ -110,30 +106,6 @@ class ChessGame:
                 return False
     
 
-    def valid_rook_move_(self, start, end):
-        "Check the rook's move"
-        start_row, start_col = start
-        end_row, end_col = end
-        if self.board[end_row-1][end_col-1] in self.black_pieces and self.current_player == 'white':
-            print()
-            return True
-        if self.board[end_row-1][end_col-1] in self.white_pieces and self.current_player == 'black':
-            return True
-        # Check if the move is either vertical or horizontal
-        if start_row != end_row and start_col != end_col:
-            return False
-
-        # Determine the direction of movement
-        row_direction = 0 if start_row == end_row else 1 if end_row > start_row else -1
-        col_direction = 0 if start_col == end_col else 1 if end_col > start_col else -1
-
-        # Check for obstacles in the path
-        current_row, current_col = start_row + row_direction, start_col + col_direction
-        while current_row != end_row or current_col != end_col:
-            if self.board[current_row - 1][current_col - 1] != ' ':
-                return False  # Obstacle in the path
-            current_row += row_direction
-            current_col += col_direction
 
     def valid_rook_move(self, start, end):
         "Check the rook's move"
@@ -143,7 +115,6 @@ class ChessGame:
         if  (start_row==end_row and start_col!=end_col):
 
             for i in range(min((start_col, end_col))+1, int(max(start_col, end_col))):
-                # print(list(range(min((start_col, end_col))+1), int(max(start_col, end_col))))
                 print(i)
                 print('sss')
                 if self.board[start_row-1][i-1] != ' ':
@@ -180,12 +151,6 @@ class ChessGame:
         "Check the bishop's move"
         start_row, start_col = start
         end_row, end_col = end
-        # if self.board[end_row-1][end_col-1] in self.black_pieces and self.current_player == 'white':
-        #     print()
-        #     return True
-        # if self.board[end_row-1][end_col-1] in self.white_pieces and self.current_player == 'black':
-        #     return True
-        # Check if the move is diagonal
         if abs(start_row - end_row) != abs(start_col - end_col):
             return False
 
@@ -206,10 +171,6 @@ class ChessGame:
             current_col += col_direction
 
         return True  # No obstacles in the path
-    
-    # def valid_bishop_move(self, start, end):
-    #     start_row, start_col = start
-    #     end_row, end_col = end
 
     def valid_queen_move(self, start, end):
         "Проверка хода королевы"
@@ -227,13 +188,10 @@ class ChessGame:
     def is_occupied_by_own_piece(self, end):
         "Проверка на то что наш ход не будет приходить на нашу же фигуру"
         end_row, end_col = end
-        # print(end)
-        # print(self.board[end_row - 1][end_col - 1])
         if self.board[end_row - 1][end_col - 1] in self.black_pieces and self.current_player == 'black':
             return False
         if self.board[end_row - 1][end_col - 1] in self.white_pieces and self.current_player == 'white':
             return False
-        # return self.board[end_row - 1][end_col - 1].islower() == (self.current_player == 'white')
 
     def make_move(self, start, end):
         if self.is_valid_move(start, end) and not self.is_occupied_by_own_piece(end):
@@ -248,8 +206,7 @@ class ChessGame:
     def switch_player(self):
         self.current_player = 'black' if self.current_player == 'white' else 'white'
 
-    # Additional rules (castling, en passant, checkmate, etc.) can be implemented here
-     
+    
     def check_end(self, start, end):
         "Проверка на то что короля съели"
         start_row, start_col = start
@@ -278,10 +235,7 @@ class ChessGame:
             for j in range(8):
                 start = (i + 1, j + 1)
 
-                # Consider moves for the current player's pieces only
-                # print(self.board[i][j])
-                # print(self.get_current_player_pieces())
-                # print(self.board[i][j] in self.get_current_player_pieces())
+
                 if self.board[i][j] in self.get_current_player_pieces() and self.board[i][j] !=' ':
                     
                     for x in range(8):
@@ -317,9 +271,7 @@ class ChessGame:
 
             k = self.find_element('k')
         else: k = self.find_element('K')
-        # king = self.find_king_position()
         print(k)
-        # print(king)
         if self.is_in_check_2() == True:
 
             #------------------------- Проверка на мат-------------------
@@ -348,14 +300,6 @@ class ChessGame:
                                 self.board[end[0] - 1][end[1] - 1] = old_2  
 
             return False                   
-
-                                
-                                                           
-                                
-                                
-
-
-        
 
     def is_in_check_2(self):
         print(self.current_player)
@@ -460,19 +404,12 @@ def get_user_input():
     """
     try:
         start = input("Enter the starting position (e.g., a2): ").lower()
-        # if admission_defeat(start) == True:
-        #     print(f'The game is over, the player has admitted defeat')
-        #     exit()
         if start =='s':
             return 's'
         
         end = input("Enter the ending position (e.g., a4): ").lower()
         if end =='s':
             return 's'
-        # if admission_defeat(end) == True:
-        #     print(f'The game is over, the player has admitted defeat')
-        #     exit()
-        # print(len(end))
         
         if len(start) != 2 or len(end) != 2:
             return False
@@ -514,19 +451,6 @@ def main():
 
         game.make_move(start, end)
 
-        # result = game.check_end(start, end)
-        # if result[1] == True:
-        #     print(f"{result[0]} wen !!!")
-        #     exit()
-
-        # if game.is_stalemate():
-        #     print("Stalemate! The game is a draw.")
-        #     print(3)
-        #     exit()
-
-        # elif game.is_stalemate():
-        #     print("Stalemate! The game is a draw.")
-        #     exit()
         
 
 if __name__ == "__main__":
