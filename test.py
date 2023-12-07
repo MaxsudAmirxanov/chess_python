@@ -195,7 +195,7 @@ class ChessGame:
 
     def make_move(self, start, end):
         if self.is_valid_move(start, end) and not self.is_occupied_by_own_piece(end):
-            start_row, start_col = start (1,5)
+            start_row, start_col = start 
             end_row, end_col = end
             self.board[end_row - 1][end_col - 1] = self.board[start_row - 1][start_col - 1]# end заменяем на start
             self.board[start_row - 1][start_col - 1] = ' ' #Stsrt заменяем на " "
